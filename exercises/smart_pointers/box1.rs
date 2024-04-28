@@ -38,12 +38,9 @@ pub fn create_empty_list() -> List {
 }
 
 pub fn create_non_empty_list() -> List {
-<<<<<<< HEAD
    // todo!()
    List::Cons(1,Box::new(List::Cons(2, (Box::new(List::Nil)))))
-=======
-    List::Cons(1, (Box::new(List::Cons(2,Box::new(List::Nil)))))
->>>>>>> 945246f78c3310a739595e9ce3a961cd0b1cf9cf
+
 }
 
 #[cfg(test)]
