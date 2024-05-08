@@ -2,8 +2,9 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
+
+use std::collections::linked_list;
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
 use std::vec::*;
@@ -24,14 +25,14 @@ impl<T> Node<T> {
 }
 #[derive(Debug)]
 struct LinkedList<T> {
-    length: u32,
+    length: i32,
     start: Option<NonNull<Node<T>>>,
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T:PartialOrd +Clone> Default for LinkedList<T> {
     fn default() -> Self {
-        Self::new()
+            Self::new()
     }
 }
 
@@ -69,14 +70,28 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
+	pub fn merge(mut list_a:LinkedList<T>, mut list_b:LinkedList<T>) -> Self
+    where T: PartialOrd +Clone
 	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+        let mut c: LinkedList<T> =LinkedList::new();
+        let mut ai: i32 = 0;
+        let mut bi: i32 = 0;
+        while ai < list_a.length && bi < list_b.length {
+            let av = list_a.get(ai).unwrap().clone();
+            let bv = list_b.get(bi).unwrap().clone();
+            c.add(if av < bv {ai +=1; av} else {bi +=1; bv})
+    }
+        while ai < list_a.length{
+            let av = list_a.get(ai).unwrap().clone();
+            c.add(av); ai +=1;
+            }
+        while bi < list_b.length{
+            let bv = list_b.get(bi).unwrap().clone();
+            c.add(bv); bi +=1;
         }
+            
+        c
+
 	}
 }
 
@@ -103,6 +118,7 @@ where
         }
     }
 }
+
 
 #[cfg(test)]
 mod tests {
